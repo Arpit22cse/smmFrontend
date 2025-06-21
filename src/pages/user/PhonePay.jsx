@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { serviceApi } from '../../service/api'; // Ensure this path is correct
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { IndianRupee, Wallet, CheckCircle, XCircle, Clock, Info } from 'lucide-react';
 import ResponsiveNavbar from '../../components/NavBar'; // Assuming you have a Navbar component
 
@@ -154,6 +154,77 @@ const PhonePePaymentPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 flex flex-col">
+            <style>
+                {`
+                /* Custom Theme Colors */
+                .bg-dark-background { background-color: #1a1a1a; } /* Near black */
+                .bg-dark-card { background-color: #2a2a2a; } /* Slightly lighter black for cards */
+                .text-text-light { color: #f5f3ff; } /* purple-50 */
+                .text-text-dim { color: #a78bfa; } /* purple-400 */
+                .bg-primary-purple { background-color: #8b5cf6; } /* purple-500 */
+                .hover\\:bg-secondary-purple:hover { background-color: #7c3aed; } /* purple-600 */
+                .border-primary-purple { border-color: #8b5cf6; } /* purple-500 */
+                .text-danger-red { color: #ef4444; } /* red-500 */
+                .border-danger-red { border-color: #ef4444; } /* red-500 */
+
+                /* react-toastify custom theme */
+                .Toastify__toast-container {
+                    font-family: 'Inter', sans-serif;
+                    z-index: 9999;
+                }
+                .Toastify__toast {
+                    border-radius: 0.5rem; /* rounded-lg */
+                    padding: 1rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem; /* gap-3 */
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+                    background-color: rgba(0, 0, 0, 0.9); /* bg-black/90 */
+                    border: 1px solid rgba(76, 29, 149, 0.3); /* border-purple-900/30 */
+                    color: #f5f3ff; /* text-white */
+                }
+                .Toastify__toast--success {
+                    background-color: rgba(0, 0, 0, 0.9);
+                    border-color: #10b981; /* green-500 */
+                    color: #f5f3ff;
+                }
+                .Toastify__toast--error {
+                    background-color: rgba(0, 0, 0, 0.9);
+                    border-color: #ef4444; /* red-500 */
+                    color: #f5f3ff;
+                }
+                .Toastify__progress-bar {
+                    background-color: #a78bfa; /* purple-400 */
+                }
+                .Toastify__close-button {
+                    color: #f5f3ff; /* white */
+                    opacity: 0.7;
+                }
+                .Toastify__close-button:hover {
+                    opacity: 1;
+                }
+
+                /* Basic animations */
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
+
+                @keyframes slideInDown {
+                    from { opacity: 0; transform: translateY(-20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-slideInDown { animation: slideInDown 0.4s ease-out forwards; }
+                .animate-slideInDown.delay-100 { animation-delay: 0.1s; }
+
+                @keyframes scaleUp {
+                    from { opacity: 0; transform: scale(0.95); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+                .animate-scaleUp { animation: scaleUp 0.3s ease-out forwards; }
+                `}
+            </style>
       <ResponsiveNavbar />
       <main className="flex-grow flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-8 rounded-xl shadow-2xl w-full max-w-md border border-purple-700 transition-all duration-500 ease-in-out transform hover:scale-[1.01] space-y-6">
@@ -240,6 +311,7 @@ const PhonePePaymentPage = () => {
       <footer className="text-center py-4 text-gray-400 select-none">
         &copy; {new Date().getFullYear()} OrderHub. All rights reserved.
       </footer>
+      <ToastContainer/>
     </div>
   );
 };
