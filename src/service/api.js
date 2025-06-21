@@ -1,6 +1,6 @@
 import axios from 'axios'
 // Replace with your API base URL
-const API_BASE_URL = 'https://2cca-103-156-168-9.ngrok-free.app';
+const API_BASE_URL = 'https://smmbackend-hayt.onrender.com';
 
 // Helper for handling API responses
 const handleResponse = async (response) => {
