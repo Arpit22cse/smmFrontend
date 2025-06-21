@@ -49,6 +49,10 @@ const PhonePePaymentPage = () => {
           icon: <Info />
         });
 
+        // Instead of simulation
+        window.location.href = response.data.paymentUrl;
+
+
         // Simulate PhonePe gateway interaction and callback
         // In a real scenario, you'd redirect to response.paymentUrl here
         // For simulation, we'll immediately trigger a mock success/failure after a delay
