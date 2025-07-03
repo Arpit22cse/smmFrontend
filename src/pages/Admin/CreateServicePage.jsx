@@ -2,7 +2,6 @@ import React, { useEffect, useCallback, useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { Loader2, AlertCircle, X, Copy, Plus, Search } from "lucide-react"; // Added Search icon
 import { serviceApi } from "../../service/api";
-import { v4 as uuidv4 } from 'uuid';
 
 const CreateServicePage = ({ setPageMode, allServices, setAllServices }) => {
   const [loading, setLoading] = useState(false);

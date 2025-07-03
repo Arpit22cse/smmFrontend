@@ -1,5 +1,5 @@
 import React from "react";
-import { X } from "react-feather";
+import { X } from "lucide-react";
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, service }) => {
     if (!isOpen || !service) return null;
