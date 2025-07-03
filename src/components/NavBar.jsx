@@ -39,7 +39,6 @@ export default function ResponsiveNavbar() {
           { name: 'Home', href: '/home', icon: 'Home' },
           { name: 'Payments', href: '/payments', icon: 'Mail' },
           { name: 'Orders', href: '/orders', icon: 'ListOrderedIcon' },
-          { name: 'addMoney', href: '/addMoney', icon: 'IndianRupeeIcon'},
           { name: 'Profile', href: '/profile', icon: 'User'},
         ]);
       } else if (auth.user.role === 'admin') {

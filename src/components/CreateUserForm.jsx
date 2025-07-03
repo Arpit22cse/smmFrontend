@@ -349,8 +349,8 @@ const CreateUserForm = () => {
             </div>
           ) : (
             services // Filter services to show only those with refill: true
-              .map((service) => (
-              <div key={service.serviceId} className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-purple-900/30 cursor-pointer transition-colors">
+              .map((service,index) => (
+              <div key={index} className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-purple-900/30 cursor-pointer transition-colors">
                 <label className="flex items-center space-x-2 flex-grow cursor-pointer">
                   <input
                     type="checkbox"

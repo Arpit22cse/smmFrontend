@@ -209,7 +209,7 @@ const OrderCard = ({ order, onOrderUpdate }) => {
       <p>
         <span className="font-semibold">Start Count:</span>{' '}
         {/* Display start_count directly from order prop */}
-        {order.start_count} 
+        {lastCheckedOrderStatusDetails?.start_count || order.start_count} 
       </p>
 
       {/* Display additional order status details ONLY if they have been explicitly fetched */}

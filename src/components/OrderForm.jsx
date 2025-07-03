@@ -151,7 +151,6 @@ function OrderForm() {
         closeButton: true,
       });
 
-      console.log('Order submitted successfully!', response.data);
       // Optionally reset form after successful submission
       setFormData({
         linkInput: '',

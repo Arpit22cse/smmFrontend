@@ -13,7 +13,6 @@ import ServiceManager from './pages/Admin/CreateService'
 import ProtectedRoute from './components/ProtectedRoute'
 import UserProfilePage from './pages/user/UserProfilePage'
 import UserDashboardPage from './pages/Admin/UserDashboardPage'
-import PhonePePaymentPage from './pages/user/PhonePay'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -40,7 +39,6 @@ function App() {
             <Route path="/payments" element={<Payments/>} />
             <Route path="/orders" element={<Order/>}/>
             <Route path="/profile" element={<UserProfilePage/>}/>
-            <Route path="/addMoney" element={<PhonePePaymentPage/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
