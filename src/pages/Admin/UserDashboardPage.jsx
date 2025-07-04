@@ -50,9 +50,16 @@ const UserDashboardPage = () => {
         setSelectedUserId(null); // Clear selected user ID until success
         try {
             const response = await serviceApi.getUser(id);
-            setUserData(response.data); // Assuming response.data contains userId, balance, orders, transactions, and services array
-            setSelectedUserId(id); // Set the successfully fetched user ID
-            toast.success(`Data loaded for user: ${id}`, { theme: "dark" });
+            if (response.success) {
+                setUserData(response.data); // Assuming response.data contains userId, balance, orders, transactions, and services array
+                setSelectedUserId(id); // Set the successfully fetched user ID
+                toast.success(`Data loaded for user: ${id}`, { theme: "dark" });
+            } else {
+                setError('Failed to fetch user data. Please try again.');
+                toast.error('User not found!', { theme: "dark" });
+                setUserData(null);
+                setSelectedUserId(null);
+            }
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to fetch user data. Please try again.');
             toast.error(err.response?.data?.message || 'Failed to fetch user data!', { theme: "dark" });
@@ -575,7 +582,7 @@ const UserDashboardPage = () => {
                                                     <span className={`text-sm font-medium uppercase ${order.status === 'completed' ? 'text-green-500' : order.status === 'pending' ? 'text-yellow-500' : 'text-blue-400'}`}>
                                                         {order.status}
                                                     </span>
-                                                    <p className="text-text-dim text-xs mt-1">Date: {formatDate(order.date)}</p>
+                                                    <p className="text-text-dim text-xs mt-1">Date: {formatDate(order.createdAt)}</p>
                                                 </div>
                                             </div>
                                         ))}

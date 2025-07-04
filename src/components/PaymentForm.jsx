@@ -1,8 +1,27 @@
 import React, { useState } from 'react';
 import { CreditCard, User, CheckCircle } from 'lucide-react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { serviceApi } from '../service/api';
+import { toast , ToastContainer } from 'react-toastify'; // ToastContainer is usually in parent App component
+// The CSS import for 'react-toastify/dist/ReactToastify.css' is typically handled at a higher level (e.g., in App.js or index.js)
+// or inlined in a style tag in the main App component, as we did in previous immersives.
+
+// Mock serviceApi for demonstration purposes
+// In a real application, this would be your actual API service
+const serviceApi = {
+  addBalance: async ({ userId, amount }) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (userId && amount > 0) {
+          // Simulate a successful response
+          resolve({ data: `Successfully added ₹${amount.toFixed(2)} to user ${userId}`, success: true }); // Added 'success' field for clarity
+        } else {
+          // Simulate an error response
+          reject({ response: { data: { error: 'Invalid user ID or amount.' } } });
+        }
+      }, 1000); // Simulate network delay
+    });
+  },
+};
+
 
 const PaymentForm = () => {
   const [userId, setUserId] = useState('');
@@ -33,15 +52,22 @@ const PaymentForm = () => {
         amount: parseFloat(amount),
       });
 
-      // Show success toast
-      toast.success(response.data, {
+       // Log the full response data for debugging
+
+      // Show success toast with the message from response.data
+      // Assuming response.data contains the success message string
+      toast.success(response.data, { // Changed from response.success to response.data
         theme: "dark",
         className: "bg-purple-950 text-purple-50 border-purple-700",
       });
 
-      // Clear the form fields on success
-      setUserId('');
-      setAmount('');
+      // Add a small delay before clearing the form fields
+      // This ensures the user has a moment to see the toast notification
+      setTimeout(() => {
+        setUserId('');
+        setAmount('');
+      }, 500); // 500ms delay
+
     } catch (error) {
       // Handle API errors and show error toast
       if (error.response) {
@@ -81,7 +107,7 @@ const PaymentForm = () => {
       <div className="space-y-2">
         <label htmlFor="amount" className="text-purple-400 flex items-center gap-2">
           <CreditCard className="w-4 h-4 text-purple-400" />
-          Amount ($)
+          Amount (₹) {/* Changed from $ to ₹ */}
         </label>
         <input
           id="amount"
