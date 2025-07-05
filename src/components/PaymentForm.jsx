@@ -1,26 +1,13 @@
 import React, { useState } from 'react';
 import { CreditCard, User, CheckCircle } from 'lucide-react';
-import { toast , ToastContainer } from 'react-toastify'; // ToastContainer is usually in parent App component
+import { toast , ToastContainer } from 'react-toastify'; 
+import { serviceApi } from '../service/api';
+// ToastContainer is usually in parent App component
 // The CSS import for 'react-toastify/dist/ReactToastify.css' is typically handled at a higher level (e.g., in App.js or index.js)
 // or inlined in a style tag in the main App component, as we did in previous immersives.
 
 // Mock serviceApi for demonstration purposes
 // In a real application, this would be your actual API service
-const serviceApi = {
-  addBalance: async ({ userId, amount }) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (userId && amount > 0) {
-          // Simulate a successful response
-          resolve({ data: `Successfully added ₹${amount.toFixed(2)} to user ${userId}`, success: true }); // Added 'success' field for clarity
-        } else {
-          // Simulate an error response
-          reject({ response: { data: { error: 'Invalid user ID or amount.' } } });
-        }
-      }, 1000); // Simulate network delay
-    });
-  },
-};
 
 
 const PaymentForm = () => {
@@ -35,38 +22,44 @@ const PaymentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      // Validate inputs before making the API call
-      if (!userId.trim()) {
-        toast.error('User ID cannot be empty.', { theme: "dark", className: "bg-purple-950 text-purple-50 border-purple-700" });
-        return;
-      }
-      if (isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
-        toast.error('Amount must be a positive number.', { theme: "dark", className: "bg-purple-950 text-purple-50 border-purple-700" });
-        return;
-      }
+    // Frontend validation
+    if (!userId.trim()) {
+      toast.error('User ID cannot be empty.', { theme: "dark", className: "bg-purple-950 text-purple-50 border-purple-700" });
+      return;
+    }
+    if (isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+      toast.error('Amount must be a positive number.', { theme: "dark", className: "bg-purple-950 text-purple-50 border-purple-700" });
+      return;
+    }
 
-      // Call the mock service API
+    try {
+      // Call the service API
       const response = await serviceApi.addBalance({
         userId,
         amount: parseFloat(amount),
       });
 
-       // Log the full response data for debugging
+      // Log the full response data for debugging
 
-      // Show success toast with the message from response.data
-      // Assuming response.data contains the success message string
-      toast.success(response.data, { // Changed from response.success to response.data
-        theme: "dark",
-        className: "bg-purple-950 text-purple-50 border-purple-700",
-      });
+      // Show success toast ONLY if response.success is true
+      if (response.success) { // This check is now based on the return value of serviceApi.addBalance
+        toast.success(`payment sucessfull in ${response.data.userId} of amount ${response.data.amount}`, {
+          theme: "dark",
+          className: "bg-purple-950 text-purple-50 border-purple-700",
+        });
 
-      // Add a small delay before clearing the form fields
-      // This ensures the user has a moment to see the toast notification
-      setTimeout(() => {
-        setUserId('');
-        setAmount('');
-      }, 500); // 500ms delay
+        // Add a small delay before clearing the form fields
+        setTimeout(() => {
+          setUserId('');
+          setAmount('');
+        }, 500); // 500ms delay
+      } else {
+          // This else block might be hit if serviceApi.addBalance resolves with success: false
+          toast.error(response.data || 'Payment processing failed.', {
+              theme: "dark",
+              className: "bg-purple-950 text-purple-50 border-purple-700",
+          });
+      }
 
     } catch (error) {
       // Handle API errors and show error toast
@@ -107,7 +100,7 @@ const PaymentForm = () => {
       <div className="space-y-2">
         <label htmlFor="amount" className="text-purple-400 flex items-center gap-2">
           <CreditCard className="w-4 h-4 text-purple-400" />
-          Amount (₹) {/* Changed from $ to ₹ */}
+          Amount (₹)
         </label>
         <input
           id="amount"
@@ -131,6 +124,6 @@ const PaymentForm = () => {
       </button>
     </form>
   );
-};
+}
 
 export default PaymentForm;
