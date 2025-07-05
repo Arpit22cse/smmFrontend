@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Lock, User, CheckCircle } from 'lucide-react';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import { serviceApi } from '../service/api'
 
 const ChangePasswordForm = () => {
@@ -51,7 +50,7 @@ const ChangePasswordForm = () => {
 
       
       // Show success toast
-      toast.success(response.data, {
+      toast.success("password change successful", {
         theme: "dark",
         className: "bg-purple-950 text-purple-50 border-purple-700",
       });

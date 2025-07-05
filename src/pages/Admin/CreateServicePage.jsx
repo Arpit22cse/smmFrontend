@@ -104,7 +104,7 @@ const CreateServicePage = ({ setPageMode, allServices, setAllServices }) => {
       if (result.success) {
         // Update the allServices state with the newly created service
         setAllServices(prevServices => [...prevServices, { ...result.data, id: result.data._id || Date.now() }]);
-        toast.success(`Service "${result.data.name}" added successfully!`, { theme: "dark" });
+        toast.success(`Service "${result.data.message}" added successfully!`, { theme: "dark" });
         setPageMode('dashboard'); // Navigate back to dashboard on success
       } else {
         toast.error("Failed to add service: " + result.data, { theme: "dark" });

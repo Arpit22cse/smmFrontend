@@ -58,7 +58,7 @@ export default function ChangeUserPassword(){
 
       {/* ToastContainer for react-toastify notifications */}
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={3000} // Notifications close after 3 seconds
         hideProgressBar={false}
         newestOnTop={false}
