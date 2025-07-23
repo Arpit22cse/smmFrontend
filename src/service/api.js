@@ -172,11 +172,11 @@ export const serviceApi = {
       if (response.status === 200) {
         return { success: true, data: response.data.data };
       } else {
-        return { success: false, message: response.data.message || "Failed to place order" };
+        return { success: false, message: response.data.data.error || "Failed to place order" };
       }
     } catch (error) {
       console.error('API Error (placeOrder):', error);
-      return { success: false, message: error.response?.data?.message || error.message };
+      return { success: false, message: error.response?.data?.error || error.message };
     }
   },
 

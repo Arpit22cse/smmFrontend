@@ -142,6 +142,18 @@ function OrderForm() {
 
       const response = await serviceApi.placeOrder(orderData); // Send constructed orderData
 
+      // If response contains an error, show error toast and return
+      if (response && !response.success) {
+        toast.update(loadingToastId, {
+          render: `Order failed: ${response.message}`,
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+        });
+        return;
+      }
+
       // Update toast on success
       toast.update(loadingToastId, {
         render: "Order submitted successfully!",
