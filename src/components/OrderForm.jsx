@@ -82,7 +82,7 @@ function OrderForm() {
         } else {
             // Apply min/max bounds only if a product is selected
             if (selectedProduct) {
-                if (numValue < parseInt(selectedProduct.min, 10)) newValue = parseInt(selectedProduct.min, 10);
+                if (numValue < parseInt(selectedProduct.min, 10)) newValue = numValue;
                 else if (numValue > parseInt(selectedProduct.max, 10)) newValue = parseInt(selectedProduct.max, 10);
                 else newValue = numValue;
             } else {
