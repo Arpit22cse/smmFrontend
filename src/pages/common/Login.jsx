@@ -59,10 +59,17 @@ const LoginPage = () => {
         toast.success('Login successful!', {
           icon: <Lock className="text-green-500" />,
           theme: "dark",
-          className: "bg-black/90 border-purple-900/30"
+          className: "bg-black/90 border-purple-900/30",
+          autoClose: 2000,
         });
         auth.login(response.data.userId, response.data.role, response.data.money);
         // Handle successful login
+      }else{
+        toast.error('Invalid credentials', {
+          icon: <Lock className="text-red-500" />,
+          theme: "dark",
+          className: "bg-black/90 border-purple-900/30"
+        });
       }
     } catch (error) {
       if (error.response?.status === 401) {

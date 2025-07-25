@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import {useEffect} from 'react'
 import axios from 'axios'
+import { authApi } from '../service/api';
 
 
 const AuthContext = createContext();
@@ -15,17 +16,24 @@ export const AuthProvider = ({ children }) => {
         },
     });
     useEffect(() => {
-    axios.get('/me', { withCredentials: true })
-      .then(res => {
-        setAuth({
-          isAuthenticated: true,
-          user:{id:res.userId, role:res.role, wallet:user.wallet}
-        });
-      })
-      .catch(() => {
-        setAuth({isAuthenticated: false, user:{id:'',role:'',wallet:0}});
-      });
-  }, []);
+
+        const data = authApi.me();
+        const res = data.user;
+        console.log(data);
+        
+        if(data.success){
+
+            setAuth({
+            isAuthenticated: true,
+            user:{id:res.userId, role:res.role, wallet:user.wallet}
+            });
+
+        }else{
+
+            setAuth({isAuthenticated: false, user:{id:'',role:'',wallet:0}});
+        }
+
+    }, []);
 
     const login = (id, role, wallet) => {
         setAuth({

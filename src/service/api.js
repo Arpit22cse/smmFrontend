@@ -32,11 +32,42 @@ export const authApi = {
       return { success: false, message: error.response?.data?.message || error.message };
     }
   },
+  me: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/me`, { withCredentials: true });
+      if (response.status === 200) {
+        const { userId, role, wallet } = response.data;
+        return {
+          success: true,
+          data: {
+            isAuthenticated: true,
+            user: { id: userId, role, wallet }
+          }
+        };
+      } else {
+        return {
+          success: false,
+          data: {
+            isAuthenticated: false,
+            user: { id: '', role: '', wallet: 0 }
+          }
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        data: {
+          isAuthenticated: false,
+          user: { id: '', role: '', wallet: 0 }
+        }
+      };
+    }
+  },
 };
 export const serviceApi = {
   getServices: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/getServices`, { withCredentials: true });
+      const response = await axios.get(`${API_BASE_URL}/admin/getServices`, { withCredentials: true });
       if (response.status === 200) {
         return { success: true, data: response.data.data};
       } else {
@@ -50,7 +81,7 @@ export const serviceApi = {
 
   createService: async (serviceData) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/createService`, serviceData, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/admin/createService`, serviceData, { withCredentials: true });
       if (response.status === 200) {
         return { success: true, data: response.data};
       } else {
@@ -64,7 +95,7 @@ export const serviceApi = {
 
   updateService: async (serviceData) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/updateService`, serviceData, { withCredentials: true });
+      const response = await axios.put(`${API_BASE_URL}/admin/updateService`, serviceData, { withCredentials: true });
       if (response.status === 200) {
         return { success: true, data: response.data };
       } else {
@@ -78,7 +109,7 @@ export const serviceApi = {
 
   customServices: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/getCustomServices`, { withCredentials: true });
+      const response = await axios.get(`${API_BASE_URL}/admin/getCustomServices`, { withCredentials: true });
       
       if (response.status === 200) {
         return { success: true, data: response.data.data };
@@ -93,7 +124,7 @@ export const serviceApi = {
 
   changePassword: async (data) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/changePassword`, data, { withCredentials: true });
+      const response = await axios.put(`${API_BASE_URL}/user/changePassword`, data, { withCredentials: true });
       
       if (response.status === 200) {
         return { success: true, data: response.data.data };
@@ -108,7 +139,7 @@ export const serviceApi = {
 
   addBalance: async (data) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/addBalance`, data, { withCredentials: true });
+      const response = await axios.put(`${API_BASE_URL}/admin/addBalance`, data, { withCredentials: true });
       
       if (response.status === 200) {
         return { success: true, data: response.data.data };
@@ -124,7 +155,7 @@ export const serviceApi = {
   changeUserPassword: async(data) => {
     try {
 
-      const response = await axios.post(`${API_BASE_URL}/changeUserPassword`, data, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/admin/changeUserPassword`, data, { withCredentials: true });
 
       if (response.status === 200) {
         return { success: true, data: response.data };
@@ -140,7 +171,7 @@ export const serviceApi = {
 
   createUser: async(data) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/createUser`, data, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/admin/createUser`, data, { withCredentials: true });
       if (response.status === 200) {
         return { success: true, data: response.data };
       } else {
@@ -154,7 +185,7 @@ export const serviceApi = {
 
   getUserServices: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/userServices`, { withCredentials: true });
+      const response = await axios.get(`${API_BASE_URL}/user/userServices`, { withCredentials: true });
       if (response.status === 200) {
         return { success: true, data: response.data.data };
       } else {
@@ -168,7 +199,7 @@ export const serviceApi = {
 
   placeOrder: async (orderData) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/placeOrder`, orderData, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/user/placeOrder`, orderData, { withCredentials: true });
       if (response.status === 200) {
         return { success: true, data: response.data.data };
       } else {
@@ -182,7 +213,7 @@ export const serviceApi = {
 
   getTransactions: async(page,limit) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/getTransactions`, {
+      const response = await axios.get(`${API_BASE_URL}/user/getTransactions`, {
         params: { page, limit },
         withCredentials: true
       });
@@ -199,7 +230,7 @@ export const serviceApi = {
 
   getOrders: async (page,limit) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/getOrders`, {
+      const response = await axios.get(`${API_BASE_URL}/user/getOrders`, {
         params: { page, limit },
         withCredentials: true
       });
@@ -217,7 +248,7 @@ export const serviceApi = {
   getUser: async (userId) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/getUser`,
+        `${API_BASE_URL}/admin/getUser`,
         { userId },
         { withCredentials: true }
       );
@@ -235,7 +266,7 @@ export const serviceApi = {
   addService: async ({userId, serviceId}) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/addService`,
+        `${API_BASE_URL}/admin/addService`,
         { userId, serviceId },
         { withCredentials: true }
       );
@@ -253,7 +284,7 @@ export const serviceApi = {
   deleteService: async ({userId, serviceId}) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/deleteService`,
+        `${API_BASE_URL}/admin/deleteService`,
         { userId, serviceId },
         { withCredentials: true }
       );
@@ -271,7 +302,7 @@ export const serviceApi = {
   deleteCustomServices: async ({serviceId }) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/deleteCustomServices`,
+        `${API_BASE_URL}/admin/deleteCustomServices`,
         { serviceId },
         { withCredentials: true }
       );
@@ -289,7 +320,7 @@ export const serviceApi = {
   requestRefill: async (orderId) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/requestRefill`,
+        `${API_BASE_URL}/user/requestRefill`,
         { orderId },
         { withCredentials: true }
       );
@@ -307,7 +338,7 @@ export const serviceApi = {
   checkRefillStatus: async (orderId) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/requestRefillStatus`,
+        `${API_BASE_URL}/user/requestRefillStatus`,
         { orderId },
         { withCredentials: true }
       );
@@ -325,7 +356,7 @@ export const serviceApi = {
   checkOrderStatus: async (order) =>{
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/getOrderStatus`,
+        `${API_BASE_URL}/user/getOrderStatus`,
         { order },
         { withCredentials: true }
       );

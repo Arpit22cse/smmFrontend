@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
 import { useAuth } from '../../context/Authcontext';
 import ResponsiveNavbar from '../../components/NavBar';
-import { serviceApi } from '../../service/api';
+import { authApi } from '../../service/api';
 
 const UserProfilePage = () => {
     const auth = useAuth(); // Using the mock useAuth hook
@@ -24,9 +24,10 @@ const UserProfilePage = () => {
 
     // Simulate fetching user data from an API
     useEffect(() => {
-        // In a real app, this would be an actual API call
-        // For now, it just sets initial mock data from useAuth
-        // No explicit setTimeout for initial load as it's already handled by useState initialization
+        authApi.me().then((res)=>{
+            setUserBalance(res.data.user.wallet);
+        })
+        
     }, []);
 
     /**
