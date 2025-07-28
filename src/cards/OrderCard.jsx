@@ -200,7 +200,14 @@ const OrderCard = ({ order, onOrderUpdate }) => {
         <span className="font-semibold">Rate:</span> <IndianRupee size={16} className="ml-1 mr-0.5" />{order.rate}
       </p>
       <p>
-        <span className="font-semibold">Last Status:</span>{' '} {/* Changed to Last Status */}
+        <span className="font-semibold">Date:</span> {new Date(order.createdAt).toLocaleDateString('en-IN', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            })}
+      </p>
+      <p>
+        <span className="font-semibold">Status:</span>{' '} {/* Changed to Last Status */}
         <span className={`font-bold ${getStatusTextColor(lastCheckedOrderStatusDetails?.status || order.lastStatus)}`}>
           {/* Display the dynamically checked status if available, otherwise default to prop status */}
           {lastCheckedOrderStatusDetails?.status || order.lastStatus}
@@ -263,16 +270,16 @@ const OrderCard = ({ order, onOrderUpdate }) => {
         )}
 
         {/* Check Main Order Status Button */}
-        <div className="mt-1">
+        {order.lastStatus !== 'Completed' && (<div className="mt-1">
           <button
             onClick={handleCheckOrderStatus}
-            disabled={checkingOrderStatusLoading || refillStatusLoading} // Disable if any other operation is loading
+            disabled={checkingOrderStatusLoading || refillStatusLoading || order.lastStatus === 'Completed'} // Disable if any other operation is loading
             className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-md bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <RefreshCcw size={18} />
             {checkingOrderStatusLoading ? 'Updating Status...' : 'Check Order Status'}
           </button>
-        </div>
+        </div>)}
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ function OrderForm() {
   useEffect(() => {
     if (selectedProduct) {
       // Ensure rate is parsed as a number
-      const rate = parseFloat(selectedProduct.rate);
+      const rate = parseFloat(selectedProduct.rate/1000);
       const calculatedTotal = formData.quantity * rate;
       setFormData(prevData => ({
         ...prevData,
@@ -257,7 +257,7 @@ function OrderForm() {
             <option value="" disabled>Choose a product or service</option>
             {servicesData.map(product => (
               <option key={product.serviceId} value={product.serviceId}>
-                {product.name} (Rate: ₹{parseFloat(product.rate).toFixed(2)}/unit)
+                {product.name} (Rate: ₹{parseFloat(product.rate)} per 1000)
               </option>
             ))}
           </select>
@@ -277,7 +277,7 @@ function OrderForm() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-purple-300 text-sm">Rate:</span>
-              <span className="text-white text-sm font-medium">₹{parseFloat(selectedProduct.rate).toFixed(2)}</span>
+              <span className="text-white text-sm font-medium">₹{parseFloat(selectedProduct.rate)}</span>
             </div>
           </div>
         )}
@@ -328,7 +328,7 @@ function OrderForm() {
         <div className="flex justify-between items-center bg-gray-700 p-4 rounded-lg border border-purple-600">
           <span className="text-purple-300 text-lg font-semibold">Total Amount:</span>
           <span className="text-white text-2xl font-bold">
-            ₹{formData.totalAmount.toFixed(2)}
+            ₹{formData.totalAmount}
           </span>
         </div>
 

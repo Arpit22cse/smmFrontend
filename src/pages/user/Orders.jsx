@@ -44,25 +44,23 @@ export default function Orders() {
     } finally {
       setLoading(false);
     }
-  }, [page]); // Dependency: page
+  }, [page]);
 
-  // --- New: Handler for updating a single order ---
+
   const handleOrderUpdate = useCallback(async (updatedOrderId) => {
-    // This function will be called by OrderCard when a refill request is made
-    // or its status is checked, and it needs the parent to refresh its data.
+    
     toast.info(`Updating order ${updatedOrderId}...`, { theme: "dark", autoClose: 1000 });
-    // For simplicity, we'll refetch the current page to ensure the updated order is fresh.
-    // In a very large app, you might fetch only that specific order and replace it in the array.
-    await fetchOrders(); // Re-fetch all orders currently displayed
-  }, [fetchOrders]); // Dependency: fetchOrders to ensure it's up-to-date
+    
+    await fetchOrders(); 
+  }, [fetchOrders]); 
 
 
-  // Effect to call fetchOrders when page changes
+  
   useEffect(() => {
     fetchOrders();
-  }, [page, fetchOrders]); // Re-fetch whenever the page number or fetchOrders function changes
+  }, [page, fetchOrders]); 
 
-  // Handler for "Load More" button
+  
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
   };
@@ -227,7 +225,7 @@ export default function Orders() {
           </div>
         )}
 
-        {loading && orders.length > 0 && ( // Show a small loader when loading more after initial data
+        {loading && orders.length > 0 && ( 
           <div className="flex justify-center items-center py-4 mt-4">
             <svg className="animate-spin h-8 w-8 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

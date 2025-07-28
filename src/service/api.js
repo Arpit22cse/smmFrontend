@@ -1,8 +1,8 @@
 import axios from 'axios'
-// Replace with your API base URL
+
 const API_BASE_URL = 'https://smmbackend-hayt.onrender.com';
 
-// Helper for handling API responses
+
 const handleResponse = async (response) => {
   const data = await response.json();
   
@@ -13,7 +13,7 @@ const handleResponse = async (response) => {
   return data;
 };
 
-// Authentication APIs
+
 export const authApi = {
   login: async ({ userId, password }) => {
     try {
