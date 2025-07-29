@@ -111,14 +111,6 @@ export default function Home(){
         draggable
         pauseOnHover
     />
-        hideProgressBar={false}
-        newestOnTop={true} // New toasts appear on top
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      <ToastContainer/>
     </div>
   );
 }
